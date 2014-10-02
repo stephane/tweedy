@@ -1,0 +1,6 @@
+*.pyc
+local_settings.py
+/static/
+/media/
+bower_components
+node_modules

@@ -1,0 +1,34 @@
+{
+  "name": "tweedy",
+  "version": "1.0.0",
+  "authors": [
+    "Stéphane Raimbault <stephane.raimbault@gmail.com>"
+  ],
+  "license": "GPLv2+",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "install": {
+    "path": "tweedy/static"
+  },
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.2.0",
+    "d3": "~3.4.11"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "./dist/css/bootstrap.css",
+        "./dist/js/bootstrap.js",
+        "./dist/fonts/glyphicons-halflings-regular.eot",
+        "./dist/fonts/glyphicons-halflings-regular.svg",
+        "./dist/fonts/glyphicons-halflings-regular.ttf",
+        "./dist/fonts/glyphicons-halflings-regular.woff"
+      ]
+    }
+  }
+}

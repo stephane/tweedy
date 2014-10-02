@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load bs_field staticfiles %}
+
+{% block content %}
+  <h1>Les œufs de Mme Tweedy</h1>
+
+  <div class="row">
+    <div class="col-sm-12">
+      {% if yields %}
+      <table class="table table-bordered">
+        <tr>
+          <th>Date</th>
+          <th>Quantité</th>
+          <th>Poule</th>
+          <th>Éleveur</th>
+        </tr>
+        {% for yield in yields %}
+          <tr>
+            <td>{{ yield.date }}</td>
+            <td>{{ yield.quantity }}</td>
+            <td>{{ yield.chicken|default:"Toutes" }}</td>
+            <td>{{ yield.by_user }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+      <p>Aucun oœuf ! M. Tweedy est parti se cacher...</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="row">
+    <svg class="chart"></svg>
+  </div>
+
+  {% if form %}
+  <div class="row">
+    <div class="col-sm-4">
+      <h2>Ajout d'œufs</h2>
+      <form class="form-horizontal" role="form" method="post">{% csrf_token %}
+        {% for field in form %}
+          {{ field|bs_field:"col-sm-4,col-sm-8" }}
+        {% endfor %}
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

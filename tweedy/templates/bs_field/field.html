@@ -1,0 +1,13 @@
+{% load i18n %}
+<div class="form-group{% if field.errors %} has-error{% endif %}">
+  <label for="{{ field.auto_id }}" class="{{ label_col }} control-label">
+    {% if required %}<strong>{% endif %}{{ field.label }}{% if required %}</strong>{% endif %}
+  </label>
+  <div class="{{ value_col }}">
+    {% if field.errors %}
+      <strong class="error">{{ field.errors.0 }}</strong><br>
+    {% endif %}
+    {{ field }}
+  </div>
+  {% if field.help_text %}<span class="help-block">{{ field.help_text }}</span>{% endif %}
+</div>
