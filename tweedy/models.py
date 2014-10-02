@@ -34,5 +34,5 @@ class Yield(models.Model):
         unique_together = (('date', 'chicken'),)
 
     def __unicode__(self):
-        return "%s : %s œuf%s" % (
+        return u"%s : %s œuf%s" % (
             self.date, self.quantity, u"s" if self.quantity > 1 else u"")
