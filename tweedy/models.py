@@ -26,7 +26,7 @@ class Yield(models.Model):
     date = models.DateField(u"Date")
     quantity = models.PositiveIntegerField(u"Quantité")
     chicken = models.ForeignKey(Chicken, verbose_name=u"Poule", blank=True, null=True)
-    by_user = models.ForeignKey(User)
+    user = models.ForeignKey(User)
 
     class Meta:
         db_table = 'yield'

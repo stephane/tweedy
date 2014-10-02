@@ -38,7 +38,7 @@
             <td>{{ yield.date }}</td>
             <td>{{ yield.quantity }}</td>
             <td>{{ yield.chicken|default:"Toutes" }}</td>
-            <td>{{ yield.by_user.first_name }}</td>
+            <td>{{ yield.user.first_name }}</td>
           </tr>
         {% endfor %}
       </table>

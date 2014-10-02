@@ -18,7 +18,7 @@ def yield_list(request):
             form = forms.YieldForm(request.POST)
             if form.is_valid():
                 new_yield = form.save(commit=False)
-                new_yield.by_user = request.user
+                new_yield.user = request.user
                 new_yield.save()
                 return redirect('yield_list')
         else:
@@ -27,7 +27,7 @@ def yield_list(request):
         # No form for anonymous user
         form = None
 
-    yields = models.Yield.objects.select_related('by_user').order_by('-date')[:10]
+    yields = models.Yield.objects.select_related('user').order_by('-date')[:10]
     ctxt = {
         'yields': yields,
         'form': form
