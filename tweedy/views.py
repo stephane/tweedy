@@ -2,7 +2,10 @@
 # Copyright (c) 2014 Stéphane Raimbault. All rights reserved.
 
 from datetime import date
+
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
 from . import models
@@ -24,7 +27,7 @@ def yield_list(request):
         # No form for anonymous user
         form = None
 
-    yields = models.Yield.objects.order_by('date')
+    yields = models.Yield.objects.order_by('-date')[:10]
     ctxt = {
         'yields': yields,
         'form': form
@@ -33,8 +36,15 @@ def yield_list(request):
 
 
 def yield_json(request):
-    yields = models.Yield.objects.all().order_by('date')
+    yields = (models.Yield.objects.values('date')
+              .annotate(total=Sum('quantity')).order_by('date'))
+    yield_data = []
+    for y in yields:
+        yield_data.append({
+            'date': y['date'].isoformat(),
+            'total': y['total']
+        })
     data = {
-        'yields': yields
+        'yields': yield_data
     }
     return JsonResponse(data)

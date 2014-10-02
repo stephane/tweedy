@@ -1,15 +1,46 @@
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-  padding-top: 50px;
-  padding-bottom: 20px;
+.navbar {
+  margin-bottom: 0px;
+  border: none;
 }
 
-.chart rect {
-  fill: steelblue;
+.appheader {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  text-align: left;
+  font-size: 24px;
+  background-color: rgb(66, 139, 202);
 }
 
-.chart text {
-  fill: white;
+.appheader h1 {
+  color: white;
+}
+
+/* Footer */
+
+footer {
+  color: #aaa;
+  /* Set the fixed height of the footer here */
+  height: 80px;
+  width: 100%;
+}
+
+/* D3 */
+
+.bar {
+  fill: rgb(66, 139, 202);
+}
+
+.bar:hover {
+  fill: rgb(143, 60, 47);
+}
+
+.axis {
   font: 10px sans-serif;
-  text-anchor: end;
+ }
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
 }

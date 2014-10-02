@@ -1,27 +1,62 @@
-var data = [4, 8, 15, 16, 23, 42];
+var margin = {top: 20, right: 20, bottom: 30, left: 30},
+    width = 1170 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
-var width = 420,
-    barHeight = 20;
+var xScale = d3.time.scale()
+      .rangeRound([0, width]);
 
-var x = d3.scale.linear()
-    .domain([0, d3.max(data)])
-    .range([0, width]);
+var yScale = d3.scale.linear()
+      .range([height, 0]);
 
-var chart = d3.select(".chart")
-    .attr("width", width)
-    .attr("height", barHeight * data.length);
+var xAxis = d3.svg.axis()
+      .scale(xScale)
+      .orient('bottom')
+      .ticks(d3.time.day)
+      .tickFormat(d3.time.format('%d %b'))
+      .tickPadding(6);
 
-var bar = chart.selectAll("g")
-    .data(data)
-  .enter().append("g")
-    .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+var yAxis = d3.svg.axis()
+      .scale(yScale)
+      .orient('left')
+      .tickFormat(d3.format("d"))
+      .tickPadding(8);
 
-bar.append("rect")
-    .attr("width", x)
-    .attr("height", barHeight - 1);
+var svg = d3.select('#yield-bar-chart').append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
 
-bar.append("text")
-    .attr("x", function(d) { return x(d) - 3; })
-    .attr("y", barHeight / 2)
-    .attr("dy", ".35em")
-    .text(function(d) { return d; });
+d3.json("json/", function(error, data) {
+  var yields = data.yields;
+
+  xScale.domain([new Date(yields[0].date), new Date(yields[yields.length - 1].date)]);
+
+  var max_total = d3.max(yields, function(d) { return d.total; });
+  yScale.domain([0, max_total]);
+  yAxis.ticks(max_total);
+
+  svg.append('g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0, ' + height + ')')
+    .call(xAxis);
+
+  svg.append('g')
+    .attr('class', 'y axis')
+    .call(yAxis)
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Œufs");
+
+  svg.selectAll('.bar')
+    .data(yields)
+    .enter().append('rect')
+    .attr('class', 'bar')
+    .attr('x', function(d) { return xScale(new Date(d.date)); })
+    .attr('width', 30)
+    .attr('y', function(d) { return yScale(d.total); })
+    .attr('height', function(d) { return height - yScale(d.total); });
+});
