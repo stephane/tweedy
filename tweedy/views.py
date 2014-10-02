@@ -27,7 +27,7 @@ def yield_list(request):
         # No form for anonymous user
         form = None
 
-    yields = models.Yield.objects.order_by('-date')[:10]
+    yields = models.Yield.objects.select_related('by_user').order_by('-date')[:10]
     ctxt = {
         'yields': yields,
         'form': form

@@ -30,7 +30,7 @@
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
               <form class="navbar-form navbar-right" role="form" method="post" action="{% url 'django.contrib.auth.views.logout' %}">{% csrf_token %}
-                <div class="form-group">{{ user }}&nbsp;</div>
+                <div class="form-group">{{ user.first_name }}&nbsp;</div>
                 <button type="submit" value="logout" class="btn btn-default">Se déconnecter</button>
               </form>
             {% else %}
