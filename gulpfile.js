@@ -6,12 +6,11 @@ var filter = require('gulp-filter');
 var flatten = require('gulp-flatten');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
-var streamqueue = require('streamqueue');
 var livereload = require('gulp-livereload');
 
 /* Build JS */
 gulp.task('js', function() {
-  var jsFilter= filter('**/*.js');
+  var jsFilter= filter('*.js');
   return gulp.src(bowerFiles())
     .pipe(jsFilter)
     .pipe(uglify())
@@ -21,7 +20,7 @@ gulp.task('js', function() {
 
 /* Concat CSS */
 gulp.task('css', function() {
-  var cssFilter = filter('**/*.css');
+  var cssFilter = filter('*.css');
   return gulp.src(bowerFiles())
     .pipe(cssFilter)
     .pipe(minifyCss())
@@ -31,10 +30,9 @@ gulp.task('css', function() {
 
 /* Bootstrap fonts */
 gulp.task('fonts', function() {
-  var fontsFilter = filter('**/fonts/*');
+  var fontsFilter = filter('glyphicons*');
   return gulp.src(bowerFiles())
     .pipe(fontsFilter)
-    .pipe(flatten())
     .pipe(gulp.dest('tweedy/static/build/fonts'));
 });
 
