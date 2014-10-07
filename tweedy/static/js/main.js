@@ -1,4 +1,4 @@
-var margin = {top: 20, right: 20, bottom: 30, left: 30},
+var margin = {top: 40, right: 20, bottom: 30, left: 30},
     width = 1170 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -32,9 +32,19 @@ d3.json("json/", function(error, data) {
 
   xScale.domain([new Date(yields[0].date), new Date(yields[yields.length - 1].date)]);
 
+  // I know 2 loops...
   var max_total = d3.max(yields, function(d) { return d.total; });
+  var sum_total = d3.sum(yields, function(d) { return d.total; });;
+
   yScale.domain([0, max_total]);
   yAxis.ticks(max_total);
+
+  svg.append("text")
+    .attr("x", (width / 2))
+    .attr("y", 0 - (margin.top * 0.3))
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px")
+    .text("Total des œufs : " + sum_total);
 
   svg.append('g')
     .attr('class', 'x axis')
